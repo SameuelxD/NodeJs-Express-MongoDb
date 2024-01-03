@@ -2,7 +2,14 @@
 // npm i express;
 
 const express=require('express');
+const bodyParser=require('body-parser');
 const app=express();
+
+// parse application/x-www.form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false}));
+// parse application/json
+app.use(bodyParser.json());
+
 require('dotenv').config();
 
 const mongoose=require('mongoose');
@@ -41,9 +48,12 @@ app.get('/servicios',(req,res) => {
    // res.send('Estas en los servicios');     //  Route localhost:3000/servicios 
    res.render("servicios", {tituloServicios: "Mis Servicios Dinamico"})
 })
-*/  
+*/
+
+//Rutas Web
 app.use('/', require('./Router/RutasWeb.js'));
 app.use('/mascotas', require('./Router/Mascotas.js'));
+
 
 app.use((req,res,next) => {  //Middleware para si ocurre un error de codigo 404 Not Found , No encontrada mostrara la pagina 404.html
     //res.status(404).sendFile(__dirname + "/public/404.html");
@@ -60,3 +70,5 @@ app.listen(port, () => {
 /* Instalar la dependencia de NodeJs, mongoose para manejar bases de datos con MongoDb , npm i mongoose */
 
 /* Para la proteccion de la configuracion a la base de datos por medio de variables de entorno instalar dotenv , npm i dotenv */
+
+/* npm i body-parser dependencia para tener caracteristicas de middleware enfocadas en leer los formularios de manera que se pueda mostrar y trabajar con la data  */
